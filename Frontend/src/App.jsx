@@ -33,6 +33,20 @@ const App = () => {
             phoneno: "",
         });
     };
+
+const updateHandler=(id)=>{
+    console.log(id)
+    axios
+        .get(`http://localhost:3000/user/${id}`)
+        .then((res) =>(setUser({
+            name: res.data[0].name,
+            email: res.data[0].email,
+            phoneno: res.data[0].phoneno,
+        })))
+        .catch((err) => console.log(err));
+    setStatus(!status)
+}
+
     const deleteHandler = (id) => {
         console.log(id);
         axios
@@ -85,6 +99,11 @@ const App = () => {
                                             onClick={() => deleteHandler(id)}
                                         >
                                             Delete
+                                        </button>
+                                        <button
+                                            onClick={() => updateHandler(id)}
+                                        >
+                                            Update
                                         </button>
                                     </td>
                                 </tr>

@@ -20,6 +20,7 @@ app.post("/users", (req, res) => {
         err ? res.json(err) : res.json("succesful");
     });
 });
+
 app.get("/users", (req, res) => {
     const sql = "SELECT * FROM users ";
 
@@ -27,6 +28,24 @@ app.get("/users", (req, res) => {
         err ? res.json(err) : res.json(data);
     });
 });
+
+app.get("/user/:id", (req, res) => {
+    const sql = "SELECT * FROM users WHERE id=?;";
+    const id=req.params.id;
+    db.query(sql,[id], (err, data) => {
+        err ? res.json(err) : res.json(data);
+    });
+});
+
+app.put("/user/id:", (req, res) => {
+    const sql = "UPDATE users SET name = ? , email = ? , phoneno = ? WHERE id = ?";
+    const id=req.params.id;
+    const values = [req.body.name, req.body.email, req.body.phoneno];
+    db.query(sql, [...values,id], (err, data) => {
+        err ? res.json(err) : res.json("succesful");
+    });
+});
+
 app.delete("/users/:id", (req, res) => {
     const id = req.params.id;
     const sql = "DELETE FROM users WHERE id=?;";
